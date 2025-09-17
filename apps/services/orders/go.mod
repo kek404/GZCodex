@@ -1,3 +1,3 @@
-module github.com/echo-platform/orders
+module echo/orders
 
 go 1.21

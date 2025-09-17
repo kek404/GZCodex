@@ -1,12 +1,6 @@
-from pathlib import Path
-import sys
-
-SRC_DIR = Path(__file__).resolve().parents[1] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.append(str(SRC_DIR))
-
-from main import app  # type: ignore
 from fastapi.testclient import TestClient
+
+from src.main import app
 
 client = TestClient(app)
 
@@ -15,3 +9,21 @@ def test_health() -> None:
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_list_agents() -> None:
+    response = client.get("/agents")
+    assert response.status_code == 200
+    payload = response.json()
+    assert "agents" in payload
+    assert sorted(payload["agents"]) == sorted(
+        [
+            "orchestrateur",
+            "achat",
+            "produit",
+            "agregateur",
+            "logistique",
+            "risque",
+            "support",
+        ]
+    )

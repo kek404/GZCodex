@@ -1,3 +1,3 @@
-module github.com/echo-platform/payments
+module echo/payments
 
 go 1.21

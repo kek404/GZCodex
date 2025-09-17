@@ -1,3 +1,3 @@
-module github.com/echo-platform/logistics
+module echo/logistics
 
 go 1.21

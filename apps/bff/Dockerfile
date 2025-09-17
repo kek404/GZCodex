@@ -13,4 +13,4 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/bff/dist ./apps/bff/dist
 COPY --from=builder /app/apps/bff/package.json ./apps/bff/package.json
 EXPOSE 4000
-CMD ["node", "apps/bff/dist/index.js"]
+CMD ["node", "apps/bff/dist/main.js"]

@@ -30,4 +30,4 @@ docker-down:
 docker compose -f deploy/docker-compose.yml down
 
 clean:
-rm -rf node_modules */*/node_modules */*/*/node_modules .turbo dist */dist */*/dist
+rm -rf node_modules */*/node_modules */*/*/node_modules .turbo dist */dist */*/dist .venv
