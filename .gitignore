@@ -1,66 +1,19 @@
-# Dependency directories
-node_modules/
-.pnpm-store/
-
-# Build outputs
-.dist/
-dist/
-build/
-out/
-.next/
-.turbo/
-
-# Coverage and test artifacts
-coverage/
-.nyc_output/
-
-# Python
-__pycache__/
-*.pyc
-.venv/
-
-# Environment files
-.env
-.env.*
-
-# OS files
+node_modules
+.turbo
+.next
+dist
+build
+coverage
 .DS_Store
-Thumbs.db
-
-# Logs and temporary files
 *.log
-*.tmp
-*.swp
-
-# Archives and binaries
 *.zip
-*.gz
-*.tgz
-*.tar
-*.rar
-*.7z
-*.sqlite
-
-# Documents and media
 *.pdf
 *.docx
-*.xlsx
 *.png
 *.jpg
-*.jpeg
-*.gif
 *.webp
-
-# Lock files
-pnpm-lock.yaml
+*.gz
+*.tgz
+*.sqlite
 yarn.lock
 package-lock.json
-*.lock
-
-# Terraform state
-terraform.tfstate*
-
-# Misc
-.idea/
-.vscode/
-
