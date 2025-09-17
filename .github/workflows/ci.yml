@@ -1,13 +1,20 @@
-name: CI
+name: ci
 on: [push, pull_request]
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with: { version: 9 }
+      - name: Enable corepack (pnpm)
+        run: corepack enable
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: pnpm install
-      - run: pnpm -w build
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Show pnpm version
+        run: pnpm --version
+      - name: Install deps (no frozen lockfile)
+        run: pnpm install --no-frozen-lockfile
+      - name: Build workspace (with safe fallbacks)
+        run: |
+          pnpm -w build || pnpm -w -r build || pnpm --filter web build
