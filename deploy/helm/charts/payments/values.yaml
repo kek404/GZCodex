@@ -1,0 +1,9 @@
+image:
+  repository: echo/payments
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 4300
+env: []
+resources: {}

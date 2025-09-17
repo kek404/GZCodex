@@ -1,0 +1,9 @@
+image:
+  repository: echo/admin
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 3000
+env: []
+resources: {}

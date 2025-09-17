@@ -1,0 +1,9 @@
+image:
+  repository: echo/bff
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 4000
+env: []
+resources: {}

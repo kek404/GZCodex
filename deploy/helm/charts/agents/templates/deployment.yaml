@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "agents.fullname" . }}
+  labels:
+    app: {{ include "agents.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "agents.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "agents.name" . }}
+    spec:
+      containers:
+        - name: agents
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 4500
+          env:
+{{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+{{- end }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
