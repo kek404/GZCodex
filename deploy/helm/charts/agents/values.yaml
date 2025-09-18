@@ -1,0 +1,9 @@
+image:
+  repository: echo/agents
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 4500
+env: []
+resources: {}

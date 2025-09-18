@@ -1,0 +1,9 @@
+image:
+  repository: echo/catalog
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 4100
+env: []
+resources: {}

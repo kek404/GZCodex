@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "payments.fullname" . }}
+  labels:
+    app: {{ include "payments.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "payments.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "payments.name" . }}
+    spec:
+      containers:
+        - name: payments
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 4300
+          env:
+{{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+{{- end }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}

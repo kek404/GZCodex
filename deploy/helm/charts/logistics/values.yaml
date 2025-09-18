@@ -1,0 +1,9 @@
+image:
+  repository: echo/logistics
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 4400
+env: []
+resources: {}

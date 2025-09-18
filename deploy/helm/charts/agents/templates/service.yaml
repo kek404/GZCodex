@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "agents.fullname" . }}
+  labels:
+    app: {{ include "agents.name" . }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ include "agents.name" . }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 4500
+      protocol: TCP
+      name: http

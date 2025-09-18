@@ -1,0 +1,131 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: echo
+      POSTGRES_USER: echo
+      POSTGRES_DB: echo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redpanda:
+    image: redpandadata/redpanda:latest
+    command:
+      ["redpanda", "start", "--overprovisioned", "--smp", "1", "--memory", "1G", "--reserve-memory", "0M"]
+    ports:
+      - "9092:9092"
+
+  opensearch:
+    image: opensearchproject/opensearch:2
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: 'true'
+    ports:
+      - "9200:9200"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    command: ["start-dev", "--http-port=8081"]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8081"
+
+  grafana:
+    image: grafana/grafana:10.4.4
+    ports:
+      - "3001:3000"
+
+  web:
+    build:
+      context: ../
+      dockerfile: apps/web/Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - bff
+
+  admin:
+    build:
+      context: ../
+      dockerfile: apps/admin/Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - "3002:3000"
+    depends_on:
+      - bff
+
+  bff:
+    build:
+      context: ../
+      dockerfile: apps/bff/Dockerfile
+    environment:
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      - catalog
+      - orders
+
+  catalog:
+    build:
+      context: ../
+      dockerfile: apps/services/catalog/Dockerfile
+    environment:
+      PORT: 4100
+    ports:
+      - "4100:4100"
+    depends_on:
+      - postgres
+
+  orders:
+    build:
+      context: ../
+      dockerfile: apps/services/orders/Dockerfile
+    environment:
+      PORT: 4200
+    ports:
+      - "4200:4200"
+    depends_on:
+      - postgres
+
+  payments:
+    build:
+      context: ../
+      dockerfile: apps/services/payments/Dockerfile
+    environment:
+      PORT: 4300
+    ports:
+      - "4300:4300"
+    depends_on:
+      - postgres
+
+  logistics:
+    build:
+      context: ../
+      dockerfile: apps/services/logistics/Dockerfile
+    environment:
+      PORT: 4400
+    ports:
+      - "4400:4400"
+
+  agents:
+    build:
+      context: ../
+      dockerfile: apps/agents/Dockerfile
+    environment:
+      PORT: 4500
+    ports:
+      - "4500:4500"
+    depends_on:
+      - bff
+
+volumes:
+  postgres-data:

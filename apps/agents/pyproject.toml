@@ -1,0 +1,15 @@
+[project]
+name = "echo-agents"
+version = "0.1.0"
+description = "Agents LangGraph scaffolding"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.110.0",
+  "uvicorn[standard]>=0.29.0"
+]
+
+[project.optional-dependencies]
+develop = ["pytest>=8.1.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
