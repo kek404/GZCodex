@@ -8,6 +8,10 @@
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@echo/shared": ["packages/shared/src/index.ts"],
+      "@echo/shared/*": ["packages/shared/src/*"]
+    }
   }
 }

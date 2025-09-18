@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
+import { createLogger } from '@echo/shared';
 
 export const typeDefs = `#graphql
   type Query {
@@ -20,6 +21,8 @@ export interface EchoServer {
   app: express.Express;
   httpServer: http.Server;
 }
+
+const logger = createLogger({ scope: 'apps/bff', level: 'info' });
 
 export async function createServer(): Promise<EchoServer> {
   const app = express();
@@ -45,5 +48,6 @@ export async function startServer(port: number): Promise<http.Server> {
     httpServer.once('error', reject);
     httpServer.listen(port);
   });
+  logger.info('BFF server listening', { port });
   return httpServer;
 }
