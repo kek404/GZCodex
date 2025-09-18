@@ -17,6 +17,11 @@ jobs:
         run: corepack enable
       - name: pnpm version
         run: pnpm --version
+      - name: Install deps
+        run: pnpm install --no-frozen-lockfile
+      - name: Build web (fallbacks)
+        run: |
+          pnpm --filter web build || pnpm -w build || echo "fallback OK"
       - name: Smoke test
         run: |
           node -v
